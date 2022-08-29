@@ -16,7 +16,7 @@ export const annonymousRoutes = [
   "/",
 ];
 
-export const houseCleanerOnlyRoutes = ["/pagamentos", "oportunidades"];
+export const houseCleanerOnlyRoutes = ["/pagamentos", "/oportunidades"];
 
 export default function useRouterGuard(
   user: UserInterface,
@@ -34,7 +34,7 @@ export default function useRouterGuard(
     return () => {
       router.events.off("routeChangeStart", handleNavigation);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, isLogged, isLogging]);
 
   function handleNavigation(url: string) {
