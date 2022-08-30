@@ -3,7 +3,7 @@ import { DiariaInterface } from "data/@types/DiariaInterface";
 import produce from "immer";
 import { UserContext } from "data/contexts/UserContext";
 import useApiHateoas from "data/hooks/useApi.hook";
-import { useEffect } from "@storybook/addons";
+import { useEffect } from "react";
 export const initialState = {
   diarias: [] as DiariaInterface[],
   isFetching: true,
@@ -48,7 +48,7 @@ export function useDiariaReducer(): DiariaReducerInterface {
     diarias = useApiHateoas<DiariaInterface[]>(
       userState.user.links,
       "lista_diarias"
-    );
+    ).data;
 
   useEffect(() => {
     if (diarias) {
