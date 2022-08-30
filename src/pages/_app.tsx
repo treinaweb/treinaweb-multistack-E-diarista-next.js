@@ -43,7 +43,7 @@ function App({ Component, pageProps }: AppProps) {
             {canShow() ? (
               <Component {...pageProps} />
             ) : (
-              <Container sx={{ textAlign: "ceter", my: 10 }}>
+              <Container sx={{ textAlign: "center", my: 10 }}>
                 <CircularProgress />
               </Container>
             )}
