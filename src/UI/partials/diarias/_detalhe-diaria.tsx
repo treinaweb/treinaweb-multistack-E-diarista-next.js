@@ -8,7 +8,13 @@ import PageTitle from "UI/components/data-display/PageTitle/PageTitle";
 import Status from "UI/components/data-display/Status/Status";
 import UserInformation from "UI/components/data-display/UserInformation/UserInformation";
 
-import { CardsContainer, JobDetails, JobTitle } from "./_detalhe-diaria.styled";
+import {
+  CardsContainer,
+  JobDetails,
+  JobTitle,
+  UserTitle,
+  UserCard,
+} from "./_detalhe-diaria.styled";
 
 const DetalheDiaria: React.FC<PropsWithChildren<{ id: string }>> = ({ id }) => {
   const { cliente, diaria, diarista } = useDetalhesDiaria(id);
@@ -47,6 +53,40 @@ const DetalheDiaria: React.FC<PropsWithChildren<{ id: string }>> = ({ id }) => {
             Endereço: <strong>{TextFormatService.getAddress(diaria)}</strong>
           </div>
         </JobDetails>
+
+        <UserCard>
+          {diarista?.id ? (
+            <>
+              <UserTitle>Diarista</UserTitle>
+              <UserInformation
+                picture={diarista?.foto_usuario ?? ""}
+                name={diarista?.nome_completo ?? ""}
+                rating={diarista?.reputacao ?? 1}
+                sx={{ bgcolor: "inherit", px: 0 }}
+              />
+              <Typography>
+                Telefone:{" "}
+                {TextFormatService.formatPhoneNumber(diarista?.telefone ?? "")}
+              </Typography>
+            </>
+          ) : (
+            <Typography>Diarista ainda não selecionado(a)</Typography>
+          )}
+        </UserCard>
+
+        <UserCard>
+          <UserTitle>Cliente</UserTitle>
+          <UserInformation
+            picture={cliente?.foto_usuario ?? ""}
+            name={cliente?.nome_completo ?? ""}
+            rating={cliente?.reputacao ?? 1}
+            sx={{ bgcolor: "inherit", px: 0 }}
+          />
+          <Typography>
+            Telefone:{" "}
+            {TextFormatService.formatPhoneNumber(cliente?.telefone ?? "")}
+          </Typography>
+        </UserCard>
       </CardsContainer>
     </Container>
   );
