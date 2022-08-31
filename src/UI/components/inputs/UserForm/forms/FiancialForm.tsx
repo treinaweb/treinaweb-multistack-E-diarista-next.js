@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import TextField from "UI/components/inputs/TextField/TextField";
 import { FinancialData } from "../UserForm.styled";
 
-export const FinalcialForm = () => {
+const FinalcialForm = () => {
   const { register } = useFormContext<FormValues>();
   return (
     <FinancialData>
@@ -15,3 +15,5 @@ export const FinalcialForm = () => {
     </FinancialData>
   );
 };
+
+export default FinalcialForm;

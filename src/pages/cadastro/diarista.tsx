@@ -7,11 +7,19 @@ import Link from "UI/components/navigation/Link/Link";
 import useCadastroDiarista from "data/hooks/pages/cadastro/useCadastroDiarista.page";
 import { BrawserService } from "data/services/BrawserService";
 import {
+  AddressForm,
   PageFormContainer,
+  PictureForm,
+  UserDataForm,
   UserFormContainer,
 } from "UI/components/inputs/UserForm/UserForm";
 import SideInformation from "UI/components/data-display/SideInformation/SideInformation";
 import useIsMobile from "data/hooks/useIsMobile";
+import { FormProvider } from "react-hook-form";
+import { Button, Container, Divider, Paper, Typography } from "@mui/material";
+import { FinancialData } from "UI/components/inputs/UserForm/UserForm.styled";
+import FinalcialForm from "UI/components/inputs/UserForm/forms/FiancialForm";
+import NewContactForm from "UI/components/inputs/UserForm/forms/NewContactForm";
 
 // import { Component } from '@styles/pages/cadastro/diarista.styled';
 
@@ -24,7 +32,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Diarista: React.FC = () => {
-  const { breadcrumbItems, step, setStep } = useCadastroDiarista(),
+  const { breadcrumbItems, step, setStep, userForm } = useCadastroDiarista(),
     isMobile = useIsMobile();
 
   useEffect(() => {
@@ -63,7 +71,57 @@ const Diarista: React.FC = () => {
 
       <UserFormContainer>
         <PageFormContainer>
-          <div></div>
+          {step === 1 && (
+            <FormProvider {...userForm}>
+              <Paper sx={{ p: 4 }} component={"form"} onSubmit={() => {}}>
+                <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                  Dados pessoais
+                </Typography>
+                <UserDataForm cadastro={true} />
+                <Divider sx={{ mb: 5 }} />
+
+                <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                  Financeiro
+                </Typography>
+                <FinalcialForm />
+                <Divider sx={{ mb: 5 }} />
+
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Hora da self! Envie uma self segurando o documento
+                </Typography>
+                <Typography sx={{ pb: 2 }}>
+                  Para sua segurança, todos os profissionais e clientes precisam
+                  enviar
+                </Typography>
+                <PictureForm />
+                <Typography sx={{ pt: 1, pb: 5 }} variant={"body2"}>
+                  Essa foto não será vista por ninguém
+                </Typography>
+                <Divider sx={{ mb: 5 }} />
+
+                <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                  Endereço
+                </Typography>
+                <AddressForm />
+                <Divider sx={{ mb: 5 }} />
+
+                <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                  Dados de acesso
+                </Typography>
+                <NewContactForm />
+                <Container sx={{ textAlign: "center" }}>
+                  <Button
+                    variant="contained"
+                    color={"secondary"}
+                    type={"submit"}
+                  >
+                    Cadastrar e escolher cidades
+                  </Button>
+                </Container>
+              </Paper>
+            </FormProvider>
+          )}
+
           {!isMobile && (
             <SideInformation
               title="Como funciona?"
