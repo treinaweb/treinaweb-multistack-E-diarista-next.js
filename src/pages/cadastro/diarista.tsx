@@ -6,6 +6,12 @@ import PageTitle from "UI/components/data-display/PageTitle/PageTitle";
 import Link from "UI/components/navigation/Link/Link";
 import useCadastroDiarista from "data/hooks/pages/cadastro/useCadastroDiarista.page";
 import { BrawserService } from "data/services/BrawserService";
+import {
+  PageFormContainer,
+  UserFormContainer,
+} from "UI/components/inputs/UserForm/UserForm";
+import SideInformation from "UI/components/data-display/SideInformation/SideInformation";
+import useIsMobile from "data/hooks/useIsMobile";
 
 // import { Component } from '@styles/pages/cadastro/diarista.styled';
 
@@ -18,7 +24,8 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Diarista: React.FC = () => {
-  const { breadcrumbItems, step, setStep } = useCadastroDiarista();
+  const { breadcrumbItems, step, setStep } = useCadastroDiarista(),
+    isMobile = useIsMobile();
 
   useEffect(() => {
     BrawserService.scrollToTop();
@@ -53,6 +60,37 @@ const Diarista: React.FC = () => {
           }
         />
       )}
+
+      <UserFormContainer>
+        <PageFormContainer>
+          <div></div>
+          {!isMobile && (
+            <SideInformation
+              title="Como funciona?"
+              items={[
+                {
+                  title: "1 - Cadastro",
+                  descricao: [
+                    "Você faz o cadastro e escolhe as cidades atendidas",
+                  ],
+                },
+                {
+                  title: "2 - Receba Propostas",
+                  descricao: [
+                    "Você receberá avisos por E-mail sobre novos serviços nas cidades atendidas",
+                  ],
+                },
+                {
+                  title: "3 - Diária Agendada",
+                  descricao: [
+                    "Se o seu perfil for escolhido pelo cliente, você receberá a confirmação do agendamento",
+                  ],
+                },
+              ]}
+            />
+          )}
+        </PageFormContainer>
+      </UserFormContainer>
     </div>
   );
 };
