@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function useCadastroDiarista() {
-  const [step, setStep] = useState(1),
+  const [step, setStep] = useState(2),
     breadcrumbItems = ["Identificação", "Cidades atendidas"],
     userForm = useForm<CadastroDiaristaFormDataInterface>({
       resolver: yupResolver(
@@ -13,7 +13,8 @@ export default function useCadastroDiarista() {
           .concat(FormSchemaService.address())
           .concat(FormSchemaService.newContact())
       ),
-    });
+    }),
+    addressListForm = useForm<CadastroDiaristaFormDataInterface>();
 
-  return { step, setStep, breadcrumbItems, userForm };
+  return { step, setStep, breadcrumbItems, userForm, addressListForm };
 }
