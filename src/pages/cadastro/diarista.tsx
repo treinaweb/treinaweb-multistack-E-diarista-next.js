@@ -21,6 +21,7 @@ import { FinancialData } from "UI/components/inputs/UserForm/UserForm.styled";
 import FinalcialForm from "UI/components/inputs/UserForm/forms/FiancialForm";
 import NewContactForm from "UI/components/inputs/UserForm/forms/NewContactForm";
 import { CitiesForm } from "UI/components/inputs/UserForm/forms/CitiesForm";
+import Dialog from "UI/components/feedback/Dialog/Dialog";
 
 // import { Component } from '@styles/pages/cadastro/diarista.styled';
 
@@ -167,6 +168,16 @@ const Diarista: React.FC = () => {
           )}
         </PageFormContainer>
       </UserFormContainer>
+      <Dialog
+        title="Cadastro realizado com sucesso"
+        noCancel
+        confirmLabel="Ver oportunidades"
+        isOpen={false}
+        onConfirm={() => window.location.reload()}
+        onClose={() => {}}
+      >
+        Agora você pode visualizar as oportunidades disponíveis na sua região.
+      </Dialog>
     </div>
   );
 };
