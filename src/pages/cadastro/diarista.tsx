@@ -42,6 +42,10 @@ const Diarista: React.FC = () => {
       addressListForm,
       onUserSubmit,
       load,
+      onAddressSubmit,
+      enderecsAtendidos,
+      newAddress,
+      sucessoCadastro,
     } = useCadastroDiarista(),
     isMobile = useIsMobile();
 
@@ -139,13 +143,22 @@ const Diarista: React.FC = () => {
 
           {step === 2 && (
             <FormProvider {...addressListForm}>
-              <Paper component={"form"} sx={{ p: 4 }}>
+              <Paper
+                component={"form"}
+                sx={{ p: 4 }}
+                onSubmit={addressListForm.handleSubmit(onAddressSubmit)}
+              >
                 <Typography sx={{ fontWeight: "bold", pb: 2 }}>
                   Selecione a cidade
                 </Typography>
-                <CitiesForm estado={"RJ"} />
+                {newAddress && <CitiesForm estado={newAddress.estado} />}
                 <Container sx={{ textAlign: "center" }}>
-                  <Button variant="contained" color="secondary" type={"submit"}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    type={"submit"}
+                    disabled={load || enderecsAtendidos?.length === 0}
+                  >
                     Finalizar o cadastro
                   </Button>
                 </Container>
@@ -184,7 +197,7 @@ const Diarista: React.FC = () => {
         title="Cadastro realizado com sucesso"
         noCancel
         confirmLabel="Ver oportunidades"
-        isOpen={false}
+        isOpen={sucessoCadastro}
         onConfirm={() => window.location.reload()}
         onClose={() => {}}
       >
