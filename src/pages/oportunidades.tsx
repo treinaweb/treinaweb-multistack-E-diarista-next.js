@@ -1,6 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Divider, Typography } from "@mui/material";
 import PageTitle from "UI/components/data-display/PageTitle/PageTitle";
 import useOportunidades from "data/hooks/pages/useOportunidades.page";
 import DataList from "UI/components/data-display/DataList/DataList";
@@ -10,6 +10,9 @@ import Table, {
   TablePagination,
   TableRow,
 } from "UI/components/data-display/Table/Table";
+import Dialog from "UI/components/feedback/Dialog/Dialog";
+import JobInformation from "UI/components/data-display/JobInformation/JobInformation";
+import UserInformation from "UI/components/data-display/UserInformation/UserInformation";
 
 // import { Component } from '@styles/pages/oportunidades.styled';
 
@@ -127,6 +130,50 @@ const Oportunidades: React.FC = () => {
       ) : (
         <Typography align="center">Nenhuma oportunidade ainda</Typography>
       )}
+
+      <Dialog
+        isOpen={false}
+        onClose={() => {}}
+        title={"Se candidatar à diária"}
+        subtitle={"Tem certeza que deseja se candidatar à diária abaixo?"}
+      >
+        <div>
+          <JobInformation>
+            <>
+              <div>
+                DATA: <strong>01/01/2022</strong>
+              </div>
+              <div>Endereco:</div>
+              <div>
+                Valor: <strong>R$ 140,00</strong>
+              </div>
+            </>
+          </JobInformation>
+        </div>
+
+        <UserInformation name="Ariel Sardinha" rating={3} picture={""} />
+        <Divider />
+        <Typography sx={{ p: 3, fontWeight: "medium", bgcolor: "grey.50" }}>
+          Últimas avaliações do cliente
+        </Typography>
+        <UserInformation
+          name="Ariel Sardinha"
+          rating={3}
+          picture={""}
+          isRating={true}
+        />
+
+        <Typography
+          sx={{ py: 2 }}
+          variant={"subtitle2"}
+          color={"textSecundary"}
+        >
+          Ao se candidatar você ainda não é o(a) diarista escolhido(a) para
+          realizar o trabalho. Vamos analisar suas qualificações e a distância
+          para o local da diária. Caso você seja a pessoa selecionada, receberá
+          um email avisando. Atente-se à sua caixa de entrada!
+        </Typography>
+      </Dialog>
     </Container>
   );
 };
