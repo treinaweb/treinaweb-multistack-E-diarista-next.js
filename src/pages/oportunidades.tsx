@@ -1,6 +1,12 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import { Button, Container, Divider, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Divider,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import PageTitle from "UI/components/data-display/PageTitle/PageTitle";
 import useOportunidades from "data/hooks/pages/useOportunidades.page";
 import DataList from "UI/components/data-display/DataList/DataList";
@@ -36,6 +42,7 @@ const Oportunidades: React.FC = () => {
     itemsPerPage,
     oportunidadeSelecionada,
     setOportunidadeSelecionada,
+    mensagemSnackbar,
   } = useOportunidades();
 
   return (
@@ -211,6 +218,12 @@ const Oportunidades: React.FC = () => {
           um email avisando. Atente-se à sua caixa de entrada!
         </Typography>
       </Dialog>
+      <Snackbar
+        open={mensagemSnackbar.length > 0}
+        message={mensagemSnackbar}
+        autoHideDuration={4000}
+        onClose={() => {}}
+      />
     </Container>
   );
 };
