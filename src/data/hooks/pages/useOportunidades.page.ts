@@ -1,7 +1,7 @@
 import { Oportunidade } from "data/@types/OportunidadeInterface";
 import { UserContext } from "data/contexts/UserContext";
 import { linksResolver } from "data/services/ApiService";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useApiHateoas from "../useApi.hook";
 import useIsMobile from "../useIsMobile";
 import usePagination from "../usePagination.hook";
@@ -18,7 +18,9 @@ export default function useOportunidades() {
     { currentPage, setCurrentPage, totalPages, itemsPerPage } = usePagination(
       oportunidades ?? [],
       5
-    );
+    ),
+    [oportunidadeSelecionada, setOportunidadeSelecionada] =
+      useState<Oportunidade>();
 
   function totalComodos(oportunidade: Oportunidade): number {
     let total = 0;
@@ -45,5 +47,7 @@ export default function useOportunidades() {
     setCurrentPage,
     totalPages,
     itemsPerPage,
+    oportunidadeSelecionada,
+    setOportunidadeSelecionada,
   };
 }

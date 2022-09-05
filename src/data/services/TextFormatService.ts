@@ -33,14 +33,17 @@ export const TextFormatService = {
     return time.substring(0, 10);
   },
 
-  getAddress(endereco: EnderecoInterface): string {
+  getAddress(endereco: EnderecoInterface | undefined): string {
     let enderecoFormatado = "";
-
-    enderecoFormatado += endereco.logradouro ? `${endereco.logradouro}, ` : "";
-    enderecoFormatado += endereco.numero ? `${endereco.numero} - ` : "";
-    enderecoFormatado += endereco.bairro ? `${endereco.bairro}, ` : "";
-    enderecoFormatado += endereco.cidade ? `${endereco.cidade} - ` : "";
-    enderecoFormatado += endereco.estado ? `${endereco.estado}` : "";
+    if (endereco) {
+      enderecoFormatado += endereco.logradouro
+        ? `${endereco.logradouro}, `
+        : "";
+      enderecoFormatado += endereco.numero ? `${endereco.numero} - ` : "";
+      enderecoFormatado += endereco.bairro ? `${endereco.bairro}, ` : "";
+      enderecoFormatado += endereco.cidade ? `${endereco.cidade} - ` : "";
+      enderecoFormatado += endereco.estado ? `${endereco.estado}` : "";
+    }
 
     return enderecoFormatado;
   },
@@ -52,5 +55,14 @@ export const TextFormatService = {
       return `(${ddd}) ${n1}-${n2}`;
     }
     return phoneNumber;
+  },
+  dateTime(date = ""): string {
+    const dia = this.reverseDate(date),
+      hora = date.substring(10, 5);
+
+    // 2022-10-10T13:00:00Z
+
+    // 2022-10-10 às 13:00:
+    return `${dia} às ${hora}`;
   },
 };

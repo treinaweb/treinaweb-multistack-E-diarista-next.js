@@ -34,6 +34,8 @@ const Oportunidades: React.FC = () => {
     setCurrentPage,
     totalPages,
     itemsPerPage,
+    oportunidadeSelecionada,
+    setOportunidadeSelecionada,
   } = useOportunidades();
 
   return (
@@ -71,7 +73,7 @@ const Oportunidades: React.FC = () => {
                       <Button
                         variant={"contained"}
                         color={"secondary"}
-                        onClick={() => {}}
+                        onClick={() => setOportunidadeSelecionada(oportunidade)}
                       >
                         Se candidatar
                       </Button>
@@ -95,26 +97,30 @@ const Oportunidades: React.FC = () => {
               data={oportunidades}
               itemsPerPage={itemsPerPage}
               currentPage={currentPage}
-              rowElement={(item, index) => (
+              rowElement={(oportunidade, index) => (
                 <TableRow key={index}>
                   <TableCell>
                     <strong>
                       {TextFormatService.reverseDate(
-                        item.data_atendimento as string
+                        oportunidade.data_atendimento as string
                       )}
                     </strong>
                   </TableCell>
-                  <TableCell>{item.nome_servico}</TableCell>
-                  <TableCell>{totalComodos(item)} cômodos</TableCell>
+                  <TableCell>{oportunidade.nome_servico}</TableCell>
+                  <TableCell>{totalComodos(oportunidade)} cômodos</TableCell>
                   <TableCell>
-                    {item.cidade} - {item.estado}
+                    {oportunidade.cidade} - {oportunidade.estado}
                   </TableCell>
                   <TableCell>
-                    {TextFormatService.currency(item.preco)}
+                    {TextFormatService.currency(oportunidade.preco)}
                   </TableCell>
                   <TableCell>
-                    {podeCandidatar(item) && (
-                      <Button onClick={() => {}}>Se candidatar</Button>
+                    {podeCandidatar(oportunidade) && (
+                      <Button
+                        onClick={() => setOportunidadeSelecionada(oportunidade)}
+                      >
+                        Se candidatar
+                      </Button>
                     )}
                   </TableCell>
                 </TableRow>
@@ -132,8 +138,8 @@ const Oportunidades: React.FC = () => {
       )}
 
       <Dialog
-        isOpen={false}
-        onClose={() => {}}
+        isOpen={oportunidadeSelecionada != undefined}
+        onClose={() => setOportunidadeSelecionada(undefined)}
         title={"Se candidatar à diária"}
         subtitle={"Tem certeza que deseja se candidatar à diária abaixo?"}
       >
@@ -141,27 +147,58 @@ const Oportunidades: React.FC = () => {
           <JobInformation>
             <>
               <div>
-                DATA: <strong>01/01/2022</strong>
+                DATA:{" "}
+                <strong>
+                  {TextFormatService.dateTime(
+                    oportunidadeSelecionada?.data_atendimento as string
+                  )}
+                </strong>
               </div>
-              <div>Endereco:</div>
               <div>
-                Valor: <strong>R$ 140,00</strong>
+                Endereco:{" "}
+                {TextFormatService.getAddress(oportunidadeSelecionada)}
+              </div>
+              <div>
+                Valor:{" "}
+                <strong>
+                  {TextFormatService.currency(oportunidadeSelecionada?.preco)}
+                </strong>
               </div>
             </>
           </JobInformation>
         </div>
 
-        <UserInformation name="Ariel Sardinha" rating={3} picture={""} />
-        <Divider />
-        <Typography sx={{ p: 3, fontWeight: "medium", bgcolor: "grey.50" }}>
-          Últimas avaliações do cliente
-        </Typography>
         <UserInformation
-          name="Ariel Sardinha"
-          rating={3}
-          picture={""}
-          isRating={true}
+          name={oportunidadeSelecionada?.cliente.nome_completo ?? ""}
+          rating={oportunidadeSelecionada?.cliente.reputacao ?? 0}
+          picture={oportunidadeSelecionada?.cliente.foto_usuario ?? ""}
         />
+        <Divider />
+
+        {oportunidadeSelecionada &&
+          oportunidadeSelecionada!.avaliacoes_cliente.length > 0 && (
+            <>
+              <Typography
+                sx={{ p: 3, fontWeight: "medium", bgcolor: "grey.50" }}
+              >
+                Últimas avaliações do cliente
+              </Typography>
+
+              {oportunidadeSelecionada!.avaliacoes_cliente.map(
+                (item, index) => {
+                  return (
+                    <UserInformation
+                      key={index}
+                      name={item.nome_avaliador}
+                      rating={item.nota}
+                      picture={item.foto_avaliador}
+                      isRating={true}
+                    />
+                  );
+                }
+              )}
+            </>
+          )}
 
         <Typography
           sx={{ py: 2 }}
