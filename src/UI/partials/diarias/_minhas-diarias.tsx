@@ -12,7 +12,7 @@ import Table, {
   TableRow,
 } from "UI/components/data-display/Table/Table";
 import Link from "UI/components/navigation/Link/Link";
-import { ConfirmDialog } from "./_minhas-diarias-dialogs";
+import { ConfirmDialog, RatingDialog } from "./_minhas-diarias-dialogs";
 
 // import { Component } from './_minhas-diarias.styled';
 
@@ -174,6 +174,14 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
           diaria={diariaConfirmar}
           onConfirm={confirmarDiaria}
           onCancel={() => setDariaConfirmar(undefined)}
+        />
+      )}
+
+      {diariaAvaliar && (
+        <RatingDialog
+          diaria={diariaAvaliar}
+          onConfirm={() => {}}
+          onCancel={() => setDiairaAvaliar(undefined)}
         />
       )}
     </Container>
