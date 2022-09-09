@@ -30,6 +30,7 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
     podeAvaliar,
     diariaConfirmar,
     setDariaConfirmar,
+    confirmarDiaria,
   } = useMinhasDiarias();
   return (
     <Container sx={{ mb: 5, p: 0 }}>
@@ -160,7 +161,7 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
       {diariaConfirmar && (
         <ConfirmDialog
           diaria={diariaConfirmar}
-          onConfirm={() => {}}
+          onConfirm={confirmarDiaria}
           onCancel={() => setDariaConfirmar(undefined)}
         />
       )}
