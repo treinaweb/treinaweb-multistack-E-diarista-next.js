@@ -15,7 +15,7 @@ import { LoginService } from "data/services/LoginService";
 function App({ Component, pageProps }: AppProps) {
   const { userState } = useContext(UserContext);
   const router = useRouterGuard(userState.user, userState.isLogging),
-    titleValue = `e-diarista ${pageProps.title && -pageProps.title}`;
+    titleValue = `e-diarista ${pageProps.title && `- ${pageProps.title}`}`;
 
   function canShow(): boolean {
     if (privateRoutes.includes(router.pathname)) {
