@@ -31,6 +31,8 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
     diariaConfirmar,
     setDariaConfirmar,
     confirmarDiaria,
+    diariaAvaliar,
+    setDiairaAvaliar,
   } = useMinhasDiarias();
   return (
     <Container sx={{ mb: 5, p: 0 }}>
@@ -86,7 +88,11 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
                         </Button>
                       )}
                       {podeAvaliar(diaria) && (
-                        <Button color={"success"} variant={"contained"}>
+                        <Button
+                          color={"success"}
+                          variant={"contained"}
+                          onClick={() => setDiairaAvaliar(diaria)}
+                        >
                           Avaliar
                         </Button>
                       )}
@@ -141,7 +147,12 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
                       </Button>
                     )}
                     {podeAvaliar(item) && (
-                      <Button color={"success"}>Avaliar</Button>
+                      <Button
+                        color={"success"}
+                        onClick={() => setDiairaAvaliar(item)}
+                      >
+                        Avaliar
+                      </Button>
                     )}
                   </TableCell>
                 </TableRow>

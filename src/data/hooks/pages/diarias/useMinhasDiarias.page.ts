@@ -16,7 +16,8 @@ export default function useMinhasDiarias() {
       diarias,
       5
     ),
-    [diariaConfirmar, setDariaConfirmar] = useState<DiariaInterface>();
+    [diariaConfirmar, setDariaConfirmar] = useState<DiariaInterface>(),
+    [diariaAvaliar, setDiairaAvaliar] = useState<DiariaInterface>();
 
   function podeVisualizar(diaria: DiariaInterface): boolean {
     return linksResolver(diaria.links, "self") != undefined;
@@ -62,5 +63,7 @@ export default function useMinhasDiarias() {
     diariaConfirmar,
     setDariaConfirmar,
     confirmarDiaria,
+    diariaAvaliar,
+    setDiairaAvaliar,
   };
 }
