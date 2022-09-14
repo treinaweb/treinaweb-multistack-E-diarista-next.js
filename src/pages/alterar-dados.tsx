@@ -11,7 +11,7 @@ import PageTitle from "UI/components/data-display/PageTitle/PageTitle";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { FormContainer, UserPicture } from "@styles/pages/alterar-dados.styled";
 import { UserType } from "data/@types/UserInterface";
-import FinalcialForm from "UI/components/inputs/UserForm/forms/FiancialForm";
+import FinancialForm from "UI/components/inputs/UserForm/forms/FiancialForm";
 import ContactForm from "UI/components/inputs/UserForm/forms/ContactForm";
 import { CitiesForm } from "UI/components/inputs/UserForm/forms/CitiesForm";
 
@@ -56,7 +56,7 @@ const AlterarDados: React.FC = () => {
                 Financeiro
               </Typography>
               <FormContainer>
-                <FinalcialForm />
+                <FinancialForm />
               </FormContainer>
             </Paper>
           )}
