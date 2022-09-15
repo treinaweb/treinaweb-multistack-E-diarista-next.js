@@ -13,18 +13,35 @@ import { useForm } from "react-hook-form";
 
 export function useAlterarDados() {
   const {
-    userState: { user },
+    userState: { user, userAddress },
     userDispatch,
   } = useContext(UserContext);
   const formMethods = useForm<CadastroDiaristaFormDataInterface>({
       resolver: getResolver(),
     }),
     [picture, setPicture] = useState<string>(),
-    [pictureFile, setPictureFile] = useState<File>();
+    [pictureFile, setPictureFile] = useState<File>(),
+    [snackMessage, setSnackMessage] = useState("");
 
   useEffect(() => {
     setPicture(user.foto_usuario);
   }, [user]);
+
+  async function onSubmit(data: CadastroDiaristaFormDataInterface) {
+    const isDiarista = user.tipo_usuario === UserType.Diarista;
+    try {
+      await Promise.all([
+        updatePicture(),
+        updateUser(data),
+        isDiarista && updateCitiesList(data),
+        isDiarista && updateUserAddress(data),
+      ]);
+
+      setSnackMessage("Dados atualizados");
+    } catch (error) {
+      setSnackMessage("Deu algo de errado ao atualizar os dados");
+    }
+  }
 
   function onPictureChange({
     target: { files },
@@ -32,6 +49,7 @@ export function useAlterarDados() {
     if (files !== null && files.length) {
       const file = files[0];
       setPicture(URL.createObjectURL(file));
+      setPictureFile(file);
     }
   }
 
@@ -58,6 +76,10 @@ export function useAlterarDados() {
             headers: {
               "Content-Type": "multipart/form-data",
             },
+          });
+          userDispatch({
+            type: "SET_USER",
+            payload: { ...user, foto_usuario: picture },
           });
         } catch (error) {}
       }
@@ -155,5 +177,14 @@ export function useAlterarDados() {
     });
   }
 
-  return { formMethods, user, picture, onPictureChange };
+  return {
+    formMethods,
+    user,
+    picture,
+    onPictureChange,
+    onSubmit,
+    userAddress,
+    snackMessage,
+    setSnackMessage,
+  };
 }
