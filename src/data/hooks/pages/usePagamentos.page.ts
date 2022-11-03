@@ -35,7 +35,8 @@ export default function usePagamentos() {
     return pagamentos.filter((pagamento) => {
       if (
         (filtro === "pago" && pagamento.status === PagamentoStatus.Pago) ||
-        (filtro === "aguardando" && PagamentoStatus.Aguardando_Transferencia)
+        (filtro === "aguardando" &&
+          pagamento.status === PagamentoStatus.Aguardando_Transferencia)
       ) {
         return true;
       }
